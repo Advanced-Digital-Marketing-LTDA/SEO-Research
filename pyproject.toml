@@ -79,7 +79,7 @@ dependencies = [
   "jsonschema-specifications==2025.9.1",
   "justext==3.0.2",
   "kiwisolver==1.5.0",
-  "litellm==1.92.0",
+  "litellm==1.92.2",
   "loguru==0.7.3",
   "lxml==6.1.1",
   "lxml-html-clean==0.4.5",
