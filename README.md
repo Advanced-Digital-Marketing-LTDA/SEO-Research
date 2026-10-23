@@ -424,3 +424,11 @@ Writes `stats/ranking_r2.json`, `stats/ranking_r2_curated_model.png`, and
 - Process: `AGENTS.md`, `SDLC.md`
 
 Verification: `python -m pytest` (live integration opt-in — see `TESTING.md`).
+
+
+## License
+
+SEO Research is licensed under the [PolyForm Shield License 1.0.0](LICENSE).
+Commercial use is permitted when it complies with that license. For uses not
+permitted by PolyForm Shield, see [commercial licensing](COMMERCIAL.md).
+Third-party components keep their own licenses.
