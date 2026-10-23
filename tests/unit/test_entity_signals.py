@@ -1,4 +1,22 @@
+# SEO Research — SEO Factors Research Tool
+# Copyright (C) 2026 Andrew Philip Weilbacher
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# Commercial licensing: contact@marketingprowess.simplelogin.com — see COMMERCIAL.md
 import polars as pl
+
 
 from seo_rank.cli import main
 from seo_rank.data.features import build_entity_signals_lazyframe
@@ -56,7 +74,7 @@ def test_entity_signals_builds_page_level_presence_and_provenance() -> None:
             "entity_mention_count": 2,
             "entity_confidence_mean": 3.0,
             "entity_relevance_mean": 0.4,
-            "schema_version": "feature_marts.v5",
+            "schema_version": "feature_marts.v6",
         },
         {
             "run_id": "run-1",
@@ -72,7 +90,7 @@ def test_entity_signals_builds_page_level_presence_and_provenance() -> None:
             "entity_mention_count": 0,
             "entity_confidence_mean": None,
             "entity_relevance_mean": None,
-            "schema_version": "feature_marts.v5",
+            "schema_version": "feature_marts.v6",
         },
     ]
 

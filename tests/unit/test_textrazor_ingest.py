@@ -1,4 +1,22 @@
+# SEO Research — SEO Factors Research Tool
+# Copyright (C) 2026 Andrew Philip Weilbacher
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# Commercial licensing: contact@marketingprowess.simplelogin.com — see COMMERCIAL.md
 import logging
+
 import urllib.parse
 
 from seo_rank.domain_blocklist import DomainBlocklist
@@ -24,8 +42,8 @@ def test_build_entity_request_uses_supported_page_metrics_extractors_and_classif
     request = build_entity_request({"text": "Technical SEO helps crawlers."})
 
     assert request.body == {
-        "extractors": "entities,topics,words,phrases,relations,entailments,senses,spelling",
-        "classifiers": "textrazor_mediatopics_2023Q1",
+        "extractors": "entities,topics,words,phrases,dependency-trees,relations,entailments,senses,spelling",
+        "classifiers": "textrazor_mediatopics_2023Q1,textrazor_iab_content_taxonomy_3.0",
         "text": "Technical SEO helps crawlers.",
     }
 
@@ -133,12 +151,12 @@ def test_fetch_textrazor_entities_for_pages_dedupes_requests_and_preserves_raw_s
     }
     assert (
         sent_requests[0]["body"]
-        == b"extractors=entities%2Ctopics%2Cwords%2Cphrases%2Crelations%2Centailments%2Csenses%2Cspelling&classifiers=textrazor_mediatopics_2023Q1&text=Alpha"
+        == b"extractors=entities%2Ctopics%2Cwords%2Cphrases%2Cdependency-trees%2Crelations%2Centailments%2Csenses%2Cspelling&classifiers=textrazor_mediatopics_2023Q1%2Ctextrazor_iab_content_taxonomy_3.0&text=Alpha"
     )
     assert sent_requests[0]["timeout"] == 12.5
     assert (
         sent_requests[1]["body"]
-        == b"extractors=entities%2Ctopics%2Cwords%2Cphrases%2Crelations%2Centailments%2Csenses%2Cspelling&classifiers=textrazor_mediatopics_2023Q1&text=Beta"
+        == b"extractors=entities%2Ctopics%2Cwords%2Cphrases%2Cdependency-trees%2Crelations%2Centailments%2Csenses%2Cspelling&classifiers=textrazor_mediatopics_2023Q1%2Ctextrazor_iab_content_taxonomy_3.0&text=Beta"
     )
     assert responses == [
         {

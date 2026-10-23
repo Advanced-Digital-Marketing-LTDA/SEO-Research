@@ -1,4 +1,22 @@
+# SEO Research — SEO Factors Research Tool
+# Copyright (C) 2026 Andrew Philip Weilbacher
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# Commercial licensing: contact@marketingprowess.simplelogin.com — see COMMERCIAL.md
 from __future__ import annotations
+
 
 import gzip
 import logging
@@ -37,6 +55,7 @@ from seo_rank.similarity import fixture_bge_reranker_score
 from seo_rank.textrazor import (
     TextRazorCredentials,
     build_entity_request,
+    entity_dedupe_key,
     execute_textrazor_request,
     normalize_page_metrics,
     validate_textrazor_credentials,
@@ -514,11 +533,7 @@ def _summarize_textrazor_response(payload: dict) -> dict[str, object]:
         relevance = float(entity.get("relevanceScore", 0.0))
         confidences.append(confidence)
         relevances.append(relevance)
-        key = str(
-            entity.get("entityEnglishId")
-            or entity.get("entityId")
-            or entity.get("matchedText", "")
-        )
+        key = entity_dedupe_key(entity)
         record = unique_entities.setdefault(
             key,
             {
@@ -848,3 +863,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+# randomized-text: lanterns drift past cobalt 9712cc2df5df577f

@@ -1,4 +1,22 @@
+# SEO Research — SEO Factors Research Tool
+# Copyright (C) 2026 Andrew Philip Weilbacher
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# Commercial licensing: contact@marketingprowess.simplelogin.com — see COMMERCIAL.md
 import json
+
 import tomllib
 from pathlib import Path
 
@@ -409,6 +427,10 @@ def test_textrazor_signal_expansion_docs_cross_link() -> None:
     assert "**[x] Slice 30 — Fold families into CLI output and artifacts**" in goals
     assert "**[x] Slice 32 — TextRazor page-metrics completeness**" in goals
     assert "**[x] Slice 33 — Small-K exploratory status**" in goals
+    assert "**[x] Slice 34 — Signal factor dossier (Phase 5.6 tracker)**" in goals
+    assert "signal_dossier.py" in goals
+    assert "Phase 5.6 — Signal factor" in roadmap
+    assert "**Progress:** 6 of 6 shipped." in roadmap
     assert "Phase 5.7 — TextRazor structured signals" in roadmap
     assert "**[ ] Slice 35 — Word/sense/spelling parse fix" in goals
     assert "Phase 5 Slices 29–30 shipped" in roadmap
@@ -418,8 +440,8 @@ def test_phase_5_progress_counts_are_aligned() -> None:
     goals = (ROOT / "GOALS.md").read_text(encoding="utf-8")
     roadmap = (ROOT / "ROADMAP.md").read_text(encoding="utf-8")
 
-    assert "27 of 48 shipped, 2 partial, 19 open" in goals
-    assert "27 of 48 shipped, 2 partial, 19 open" in roadmap
+    assert "31 of 48 shipped, 1 partial, 16 open" in goals
+    assert "31 of 48 shipped, 1 partial, 16 open" in roadmap
 
 
 def test_ranking_explainability_docs_cross_link() -> None:
