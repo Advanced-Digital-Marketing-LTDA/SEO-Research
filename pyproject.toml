@@ -88,7 +88,7 @@ dependencies = [
   "magika==1.0.3",
   "markdown-it-py==4.2.0",
   "markupsafe==3.0.3",
-  "mcp==1.28.1",
+  "mcp==1.30.0",
   "mdurl==0.1.2",
   "mmh3==5.2.1",
   "mpmath==1.3.0",
