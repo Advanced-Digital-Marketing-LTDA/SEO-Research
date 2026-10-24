@@ -15,3 +15,7 @@ effort = "low"
 [content]
 enabled = true
 
+
+# Existing repository contracts; evidence remains scoped to its actual target/revision.
+[content.context]
+M = ["analysis_spec.v1.2.yaml"]
