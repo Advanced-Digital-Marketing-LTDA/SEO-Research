@@ -1,4 +1,22 @@
+# SEO Research — SEO Factors Research Tool
+# Copyright (C) 2026 Andrew Philip Weilbacher
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# Commercial licensing: contact@marketingprowess.simplelogin.com — see COMMERCIAL.md
 import json
+
 from pathlib import Path
 
 import polars as pl
@@ -15,6 +33,7 @@ from seo_rank.data.features import FEATURE_VALIDATION_RULES
 from seo_rank.data.features import ONPAGE_FEATURES_BOUNDED_COLUMNS
 from seo_rank.data.features import ONPAGE_FEATURES_EXTRA_COLUMNS
 from seo_rank.data.features import ONPAGE_FEATURES_REQUIRED_COLUMNS
+from seo_rank.data.features import ensure_feature_marts_for_analysis
 from seo_rank.data.features import (
     build_analysis_panel_keyword_serp,
     build_feature_marts,
@@ -96,6 +115,29 @@ def test_feature_rank_bounds_follow_the_requested_serp_depth() -> None:
     assert bounds["bge_rank"] == (1, 50)
     assert bounds["gemini_doc_retrieval_rank"] == (1, 50)
     assert bounds["gemini_semantic_similarity_rank"] == (1, 50)
+
+
+def test_ensure_feature_marts_rebuilds_when_textrazor_metrics_are_stale(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    run_dir = tmp_path / "run-1"
+    run_dir.mkdir()
+    (run_dir / "run.json").write_text('{"run_id": "run-1"}', encoding="utf-8")
+    rebuilt: list[Path] = []
+
+    monkeypatch.setattr(
+        "seo_rank.data.features.dataset_matches_schema",
+        lambda dataset_dir, expected_version: dataset_dir.name != "textrazor_page_metrics",
+    )
+    monkeypatch.setattr(
+        "seo_rank.data.features.build_feature_marts",
+        lambda path: rebuilt.append(path) or {},
+    )
+
+    ensure_feature_marts_for_analysis(run_dir)
+
+    assert rebuilt == [run_dir]
 
 
 def test_materialization_drops_blocklisted_domain_rows_and_replaces_stale_parts(
@@ -614,12 +656,15 @@ def test_write_feature_dataset_allows_textrazor_entailment_scores_above_one(
                 "textrazor_entailment_prior": 1.0,
                 "textrazor_entailment_context": 1.0,
                 "textrazor_word_count": 2,
-                "textrazor_grammar_count": 1,
-                "textrazor_sense_count": 1,
-                "textrazor_spelling_count": 1,
+                "textrazor_sense_score": 0.91,
+                "textrazor_spelling_suggestion_count": 1,
                 "textrazor_relation_count": 2,
                 "textrazor_property_count": 1,
                 "textrazor_noun_phrase_count": 3,
+                "textrazor_entity_mention_count": 2,
+                "textrazor_unique_entity_count": 2,
+                "textrazor_unique_entity_density_per_1k_words": 1000.0,
+                "textrazor_entity_mention_density_per_1k_words": 1000.0,
                 "textrazor_entities_present": True,
                 "textrazor_topics_present": True,
                 "textrazor_categories_present": True,
@@ -666,12 +711,15 @@ def test_write_feature_dataset_includes_dataset_name_on_validation_failure(
                 "textrazor_entailment_prior": 0.34,
                 "textrazor_entailment_context": 0.27,
                 "textrazor_word_count": 2,
-                "textrazor_grammar_count": 1,
-                "textrazor_sense_count": 1,
-                "textrazor_spelling_count": 1,
+                "textrazor_sense_score": 0.91,
+                "textrazor_spelling_suggestion_count": 1,
                 "textrazor_relation_count": 2,
                 "textrazor_property_count": 1,
                 "textrazor_noun_phrase_count": 3,
+                "textrazor_entity_mention_count": 2,
+                "textrazor_unique_entity_count": 2,
+                "textrazor_unique_entity_density_per_1k_words": 1000.0,
+                "textrazor_entity_mention_density_per_1k_words": 1000.0,
                 "textrazor_entities_present": True,
                 "textrazor_topics_present": True,
                 "textrazor_categories_present": True,

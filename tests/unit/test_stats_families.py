@@ -1,4 +1,22 @@
+# SEO Research — SEO Factors Research Tool
+# Copyright (C) 2026 Andrew Philip Weilbacher
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# Commercial licensing: contact@marketingprowess.simplelogin.com — see COMMERCIAL.md
 from __future__ import annotations
+
 
 from copy import deepcopy
 from pathlib import Path
@@ -18,6 +36,12 @@ ONPAGE_FAMILY_KEYS = (
     "onpage_content_quality",
     "onpage_core_web_vitals",
     "onpage_technical_checks",
+)
+TEXTRAZOR_PHASE57_FAMILY_KEYS = (
+    "textrazor_entity_salience",
+    "textrazor_entity_coverage",
+    "textrazor_entity_linkage",
+    "textrazor_syntactic_complexity",
 )
 EXCLUDED_MODEL_COLUMNS = frozenset(
     {
@@ -160,8 +184,9 @@ def test_signal_family_registry_preserves_order_and_panel_grain() -> None:
         "textrazor_topic_score",
         "textrazor_category_classifier_score",
         "textrazor_entailment_score_prior_context",
-        "textrazor_word_grammar_sense_spelling",
+        "textrazor_word_sense_spelling",
         "textrazor_relation_property_noun_phrase",
+        *TEXTRAZOR_PHASE57_FAMILY_KEYS,
         "backlinks_counts",
         *ONPAGE_FAMILY_KEYS,
     )
@@ -184,6 +209,32 @@ def test_signal_family_registry_preserves_order_and_panel_grain() -> None:
     assert registry.family("onpage_core_web_vitals").signal_columns == ONPAGE_CORE_WEB_VITALS_COLUMNS
     assert registry.family("onpage_technical_checks").signal_columns == ONPAGE_TECHNICAL_CHECKS_COLUMNS
     assert registry.source_mart_for_family("onpage_content_quality") == "onpage_features"
+    assert registry.family("textrazor_entity_salience").signal_columns == (
+        "textrazor_entity_salience_mean",
+        "textrazor_entity_salience_median",
+        "textrazor_entity_salience_top3_max",
+        "textrazor_entity_salience_mention_weighted",
+        "textrazor_salience_unique_entity_count",
+    )
+    assert registry.family("textrazor_entity_coverage").signal_columns == (
+        "textrazor_entity_mention_count",
+        "textrazor_unique_entity_count",
+        "textrazor_unique_entity_density_per_1k_words",
+        "textrazor_entity_mention_density_per_1k_words",
+    )
+    assert registry.family("textrazor_entity_linkage").signal_columns == (
+        "textrazor_linked_entity_fraction",
+        "textrazor_entity_type_entropy",
+    )
+    assert registry.family("textrazor_syntactic_complexity").signal_columns == (
+        "textrazor_dependency_depth_mean",
+        "textrazor_dependency_relation_type_count",
+        "textrazor_part_of_speech_type_count",
+    )
+    for family_key in TEXTRAZOR_PHASE57_FAMILY_KEYS:
+        family = registry.family(family_key)
+        assert registry.source_mart_for_family(family_key) == "textrazor_page_metrics"
+        assert plackett_luce_enabled_for_family(family) is True
     assert registry.families_by_kind("onpage_metric") == tuple(
         registry.family(key) for key in ONPAGE_FAMILY_KEYS
     )

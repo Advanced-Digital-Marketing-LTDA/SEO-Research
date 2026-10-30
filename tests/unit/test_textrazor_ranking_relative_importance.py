@@ -1,4 +1,22 @@
+# SEO Research — SEO Factors Research Tool
+# Copyright (C) 2026 Andrew Philip Weilbacher
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# Commercial licensing: contact@marketingprowess.simplelogin.com — see COMMERCIAL.md
 from __future__ import annotations
+
 
 import json
 
@@ -123,9 +141,8 @@ def test_ranking_importance_factor_columns_uses_seo_concept_groups() -> None:
     )
     assert groups["content"] == (
         "textrazor_word_count",
-        "textrazor_grammar_count",
-        "textrazor_sense_count",
-        "textrazor_spelling_count",
+        "textrazor_sense_score",
+        "textrazor_spelling_suggestion_count",
         "textrazor_relation_count",
         "textrazor_property_count",
         "textrazor_noun_phrase_count",

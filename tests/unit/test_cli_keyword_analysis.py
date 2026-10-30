@@ -1,4 +1,22 @@
+# SEO Research — SEO Factors Research Tool
+# Copyright (C) 2026 Andrew Philip Weilbacher
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# Commercial licensing: contact@marketingprowess.simplelogin.com — see COMMERCIAL.md
 from __future__ import annotations
+
 
 import json
 from pathlib import Path
@@ -68,9 +86,8 @@ def _textrazor_page_metrics_frame() -> pl.DataFrame:
                 "textrazor_entailment_prior": 1.0,
                 "textrazor_entailment_context": 0.5,
                 "textrazor_word_count": 20,
-                "textrazor_grammar_count": 2,
-                "textrazor_sense_count": 1,
-                "textrazor_spelling_count": 0,
+                "textrazor_sense_score": 0.91,
+                "textrazor_spelling_suggestion_count": 0,
                 "textrazor_relation_count": 4,
                 "textrazor_property_count": 3,
                 "textrazor_noun_phrase_count": 2,

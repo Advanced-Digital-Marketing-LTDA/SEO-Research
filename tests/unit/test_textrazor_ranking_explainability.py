@@ -1,4 +1,22 @@
+# SEO Research — SEO Factors Research Tool
+# Copyright (C) 2026 Andrew Philip Weilbacher
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# Commercial licensing: contact@marketingprowess.simplelogin.com — see COMMERCIAL.md
 from __future__ import annotations
+
 
 import json
 
@@ -67,6 +85,11 @@ def _textrazor_panel_frame() -> pl.DataFrame:
                     "textrazor_entailment_score": signal + 0.05,
                     "textrazor_relation_count": int(serp_rank + 1),
                     "textrazor_property_count": int(serp_rank),
+                    "textrazor_entity_mention_count": int(serp_rank + 2),
+                    "textrazor_unique_entity_count": int(5 - serp_rank),
+                    "textrazor_unique_entity_density_per_1k_words": float(5 - serp_rank) * 10.0,
+                    "textrazor_entity_mention_density_per_1k_words": float(serp_rank + 2) * 10.0,
+                    "textrazor_unique_entity_density_per_1k_chars": float(5 - serp_rank) * 2.0,
                     "schema_version": "analysis_mart.v1",
                 }
             )

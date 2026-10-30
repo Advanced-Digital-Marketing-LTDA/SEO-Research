@@ -1,4 +1,22 @@
+# SEO Research — SEO Factors Research Tool
+# Copyright (C) 2026 Andrew Philip Weilbacher
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# Commercial licensing: contact@marketingprowess.simplelogin.com — see COMMERCIAL.md
 import logging
+
 from pathlib import Path
 
 import pytest
@@ -45,8 +63,12 @@ def test_load_analysis_spec_reads_repo_root_yaml() -> None:
         "textrazor_topic_score",
         "textrazor_category_classifier_score",
         "textrazor_entailment_score_prior_context",
-        "textrazor_word_grammar_sense_spelling",
+        "textrazor_word_sense_spelling",
         "textrazor_relation_property_noun_phrase",
+        "textrazor_entity_salience",
+        "textrazor_entity_coverage",
+        "textrazor_entity_linkage",
+        "textrazor_syntactic_complexity",
         "backlinks_counts",
         "onpage_content_quality",
         "onpage_core_web_vitals",
@@ -83,7 +105,11 @@ def test_load_analysis_spec_exposes_signal_family_metadata() -> None:
     assert analysis_spec.signal_family("textrazor_topic_score").signal_columns == (
         "textrazor_topic_score",
     )
-    assert analysis_spec.signal_family("textrazor_word_grammar_sense_spelling").kind == "textrazor_structural"
+    assert analysis_spec.signal_family("textrazor_word_sense_spelling").kind == "textrazor_structural"
+    assert analysis_spec.signal_family("textrazor_entity_salience").kind == "textrazor_scalar"
+    assert analysis_spec.signal_family("textrazor_entity_coverage").kind == "textrazor_structural"
+    assert analysis_spec.signal_family("textrazor_entity_linkage").kind == "textrazor_structural"
+    assert analysis_spec.signal_family("textrazor_syntactic_complexity").kind == "textrazor_structural"
     assert analysis_spec.signal_family("backlinks_counts").kind == "backlinks_metric"
     assert analysis_spec.signal_family("backlinks_counts").signal_columns == (
         "backlinks_count",
@@ -159,8 +185,12 @@ def test_build_stats_output_metadata_exposes_estimand_version() -> None:
         "textrazor_topic_score",
         "textrazor_category_classifier_score",
         "textrazor_entailment_score_prior_context",
-        "textrazor_word_grammar_sense_spelling",
+        "textrazor_word_sense_spelling",
         "textrazor_relation_property_noun_phrase",
+        "textrazor_entity_salience",
+        "textrazor_entity_coverage",
+        "textrazor_entity_linkage",
+        "textrazor_syntactic_complexity",
         "backlinks_counts",
         "onpage_content_quality",
         "onpage_core_web_vitals",

@@ -1,4 +1,22 @@
 """Ranking explainability summaries for similarity and TextRazor metrics."""
+# SEO Research — SEO Factors Research Tool
+# Copyright (C) 2026 Andrew Philip Weilbacher
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+# Commercial licensing: contact@marketingprowess.simplelogin.com — see COMMERCIAL.md
+
 
 from __future__ import annotations
 
@@ -41,6 +59,11 @@ TEXTRAZOR_RANKING_METRICS: tuple[tuple[str, str], ...] = (
     ("entailment_score", "textrazor_entailment_score"),
     ("relation_count", "textrazor_relation_count"),
     ("property_count", "textrazor_property_count"),
+    ("entity_mention_count", "textrazor_entity_mention_count"),
+    ("unique_entity_count", "textrazor_unique_entity_count"),
+    ("unique_entity_density_per_1k_words", "textrazor_unique_entity_density_per_1k_words"),
+    ("entity_mention_density_per_1k_words", "textrazor_entity_mention_density_per_1k_words"),
+    ("unique_entity_density_per_1k_chars", "textrazor_unique_entity_density_per_1k_chars"),
 )
 
 SIMILARITY_RANKING_METRICS: tuple[tuple[str, str], ...] = tuple(
@@ -561,7 +584,7 @@ _RANKING_IMPORTANCE_FAMILY_KEYS: dict[str, tuple[str, ...]] = {
         "textrazor_entailment_score_prior_context",
     ),
     "content": (
-        "textrazor_word_grammar_sense_spelling",
+        "textrazor_word_sense_spelling",
         "textrazor_relation_property_noun_phrase",
         "onpage_content_quality",
     ),
@@ -2601,3 +2624,5 @@ def _metric_relative_importance_rows(
             }
         )
     return rows
+
+# randomized-text: saffron currents follow a folded map 6e387b12d969c38a
